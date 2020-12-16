@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'resumen',
     loadChildren: () =>
-      import('src/app/pages/resumen/resumen.module').then(
+      import('src/app/pages/resume/resumen.module').then(
         (m) => m.ResumenModule
       ),
     canActivate: [LoginGuard],
