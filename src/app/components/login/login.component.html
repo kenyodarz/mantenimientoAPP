@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="content">
+    <div class="text">Iniciar Sesión</div>
+    <form
+      [formGroup]="loginForm"
+      #f="ngForm"
+      novalidate
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="field">
+        <input type="text" required formControlName="username"/>
+        <span class="pi pi-user"></span>
+        <label>Usuario</label>
+      </div>
+      <div class="field">
+        <input type="password" required formControlName="password"/>
+        <span class="pi pi-lock"></span>
+        <label>Contraseña</label>
+      </div>
+      <div class="forgot-pass">
+        <a href="#">¿Olvidaste tu Contraseña?</a>
+      </div>
+      <button type="submit"  [disabled]="!loginForm.valid">Iniciar Sesion</button>
+      <div class="sign-up">
+        ¿No estas registrado?
+        <a href="#">Registrate!</a>
+      </div>
+    </form>
+  </div>
+</div>

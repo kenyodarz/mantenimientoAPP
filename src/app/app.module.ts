@@ -11,11 +11,14 @@ import { PrimengModule } from './shared/primeng.module';
 /* Providers / Services */
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { AuthInterceptorProviders } from "src/app/helpers/auth.interceptor";
 /* Componentes */
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -25,7 +28,12 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     PrimengModule,
   ],
-  providers: [MessageService, DialogService, ConfirmationService],
+  providers: [
+    MessageService,
+    DialogService,
+    ConfirmationService,
+    AuthInterceptorProviders,
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
