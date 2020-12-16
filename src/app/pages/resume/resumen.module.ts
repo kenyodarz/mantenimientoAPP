@@ -8,10 +8,11 @@ import { PrimengModule } from 'src/app/shared/primeng.module';
 /* Components */
 import { HomeComponent } from './components/home/home.component';
 import { ResumenComponent } from './resumen.component';
+import { EquipoComponent } from './components/equipo/equipo.component';
 
 
 @NgModule({
-  declarations: [ResumenComponent, HomeComponent],
+  declarations: [ResumenComponent, HomeComponent, EquipoComponent],
   imports: [
     CommonModule,
     ResumenRoutingModule,
