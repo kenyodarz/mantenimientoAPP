@@ -11,14 +11,13 @@ import { PrimengModule } from './shared/primeng.module';
 /* Providers / Services */
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AuthInterceptorProviders } from "src/app/helpers/auth.interceptor";
+import { AuthInterceptorProviders } from 'src/app/helpers/auth.interceptor';
 /* Componentes */
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

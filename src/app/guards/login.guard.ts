@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { TokenStorageService } from "src/app/services/token-storage.service";
+import { TokenStorageService } from "src/app/core/services/token-storage.service";
 
 @Injectable({
   providedIn: 'root'

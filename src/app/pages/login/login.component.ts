@@ -5,8 +5,8 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 //Servicios
 import { MessageService } from 'primeng/api';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/core/services/token-storage.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
