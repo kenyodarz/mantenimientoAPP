@@ -1,6 +1,60 @@
 <div class="container">
-  
   <p-panel styleClass="p-fluid">
-
+    <p-header>
+      <span>Equipos</span>
+    </p-header>
+    <p-menubar [model]="items"></p-menubar>
+    <p-table
+      [value]="equipos"
+      #dt
+      [paginator]="true"
+      selectionMode="single"
+      [(selection)]="selectedEquipo"
+      dataKey="code"
+      [rows]="10"
+      [responsive]="true"
+      [globalFilterFields]="['code', 'section', 'nombre']"
+    >
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+          <input
+            type="text"
+            pInputText
+            size="50"
+            placeholder="Buscar"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            style="width: auto"
+          />
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">#</th>
+          <th>Equipo</th>
+          <th>Seccion</th>
+          <th>Codigo</th>
+          <th style="width: 8rem">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-equipo>
+        <tr [pSelectableRow]="equipo">
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ equipo.nombre }}</td>
+          <td>{{ equipo.section }}</td>
+          <td>{{ equipo.code }}</td>
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              icon="pi pi-arrow-right"
+              class="p-button-outlined p-button-text"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary"></ng-template>
+    </p-table>
   </p-panel>
 </div>

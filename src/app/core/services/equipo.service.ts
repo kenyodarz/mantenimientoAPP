@@ -7,13 +7,13 @@ import { Equipo } from 'src/app/core/models/equipo';
 // RxJS
 import { Observable } from 'rxjs';
 // Enviroment
-import { environment } from 'src/environments/environment';
+import { API_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EquipoService extends CommonService<Equipo, string> {
-  protected API_URL: string = `${this.API_URL}/description/`;
+  protected API_URL: string = `${API_URL}/equipos/`;
   constructor(protected http: HttpClient) {
     super(http);
   }
