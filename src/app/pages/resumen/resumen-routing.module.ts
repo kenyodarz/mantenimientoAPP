@@ -7,6 +7,12 @@ import { ResumenComponent } from './resumen.component';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+    canActivate: [LoginGuard],
+  },
+  {
+    path: '',
     component: ResumenComponent,
     children: [
       {
@@ -16,16 +22,10 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home',
-    canActivate: [LoginGuard],
-  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ResumenRoutingModule { }
+export class ResumenRoutingModule {}
