@@ -7,18 +7,25 @@ import { LoginGuard } from './guards/login.guard';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
-  { path: 'home', component: , canActivate: [LoginGuard] },
+  {
+    path: 'resumen',
+    loadChildren: () =>
+      import('src/app/pages/resumen/resumen.module').then(
+        (m) => m.ResumenModule
+      ),
+    canActivate: [LoginGuard],
+  },
   { path: 'login', component: LoginComponent },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'resumen',
     canActivate: [LoginGuard],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

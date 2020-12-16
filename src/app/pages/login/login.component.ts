@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
           summary: '¡¡¡Correcto!!!',
           detail: 'Se ha Logueado Correctamente',
         });
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/resumen");
       },
       (err) => {
         this.errorMessage = err.error.message;
