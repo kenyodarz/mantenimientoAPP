@@ -5,8 +5,15 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { PanelModule } from 'primeng/panel';
 
-const myModule = [ToastModule, MessagesModule, MessageModule, TableModule];
+const myModule = [
+  ToastModule,
+  MessagesModule,
+  MessageModule,
+  TableModule,
+  PanelModule,
+];
 
 @NgModule({
   declarations: [],
