@@ -58,13 +58,78 @@
     </p-table>
   </p-panel>
 </div>
-
-<p-dialog header="Header" [(visible)]="displaySaveEditDialog" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displaySaveEditDialog=false" label="Ok" styleClass="p-button-text"></p-button>
-        </ng-template>
+<!-- Modal Guardar / Editar -->
+<p-dialog
+  header="{{ title }} equipo"
+  [(visible)]="displaySaveEditDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="equipoForm" (ngSubmit)="onGuardar()">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div>
+        <div>Codigo</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="code"
+          placeholder="Identificador Equipo"
+        />
+        <p-message
+          severity="error"
+          text="Es necesario un identificador del equipo"
+          *ngIf="
+            !equipoForm.controls['code'].valid &&
+            equipoForm.controls['code'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Nombre</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="nombre"
+          placeholder="Nombre Equipo"
+        />
+        <p-message
+          severity="error"
+          text="Ingrese un nombre al equipo"
+          *ngIf="
+            !equipoForm.controls['nombre'].valid &&
+            equipoForm.controls['nombre'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Seccion</div>
+        <p-dropdown
+          [options]="section"
+          formControlName="section"
+          placeholder="Seleccione una Seccion" 
+          
+        ></p-dropdown>
+        <p-message
+          severity="error"
+          text="Ingrese un nombre al proyecto"
+          *ngIf="
+            !equipoForm.controls['section'].valid &&
+            equipoForm.controls['section'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displaySaveEditDialog = false; onGuardar()"
+      label="Guardar"
+      [disabled]="equipoForm.invalid"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
 </p-dialog>

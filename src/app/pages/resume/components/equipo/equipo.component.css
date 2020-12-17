@@ -47,3 +47,8 @@
   place-items: center;
   text-align: center;
 }
+
+::ng-deep .p-dialog .p-dialog-content {
+  /* border: 2PX solid green; */
+  overflow-y: inherit;
+}

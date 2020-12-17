@@ -9,6 +9,7 @@ import { MenuItem } from 'primeng/api';
 import { EquipoService } from 'src/app/core/services/equipo.service';
 // Modelos
 import { Equipo } from 'src/app/core/models/equipo';
+import { ESection } from 'src/app/core/models/esection.enum';
 
 @Component({
   selector: 'app-equipo',
@@ -22,6 +23,8 @@ export class EquipoComponent implements OnInit {
   equipoForm: FormGroup;
   items: MenuItem[];
   displaySaveEditDialog: boolean = false;
+  title: string = '';
+  section = Object.keys(ESection);
 
   constructor(
     private equipoService: EquipoService,
@@ -79,6 +82,7 @@ export class EquipoComponent implements OnInit {
     this.equipoForm.reset();
     if (editar) {
       if (this.selectedEquipo !== null && this.selectedEquipo.code !== null) {
+        this.title = 'Editar';
         this.equipoForm.patchValue(this.selectedEquipo);
       } else {
         this.messageService.add({
@@ -89,9 +93,16 @@ export class EquipoComponent implements OnInit {
         return;
       }
     } else {
+      this.title = 'Guardar';
       this.equipo = new Equipo();
     }
     this.displaySaveEditDialog = true;
+  }
+
+  onGuardar() {
+    console.log(this.equipoForm.value);
+    this.equipo = this.equipoForm.value;
+    this.guardarEquipo();
   }
 
   ngOnInit(): void {
@@ -131,7 +142,7 @@ export class EquipoComponent implements OnInit {
       {
         label: 'Actualizar',
         icon: 'pi pi-fw pi-refresh',
-        // command: () => this.obtenerProyectos(),
+        command: () => this.obtenerEquipos(),
       },
     ];
   }
