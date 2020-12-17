@@ -31,18 +31,18 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem">#</th>
+          <th>Codigo</th>
           <th>Equipo</th>
           <th>Seccion</th>
-          <th>Codigo</th>
           <th style="width: 8rem">Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowIndex="rowIndex" let-equipo>
         <tr [pSelectableRow]="equipo">
           <td>{{ rowIndex + 1 }}</td>
+          <td>{{ equipo.code }}</td>
           <td>{{ equipo.nombre }}</td>
           <td>{{ equipo.section }}</td>
-          <td>{{ equipo.code }}</td>
           <td>
             <button
               type="button"
@@ -50,6 +50,7 @@
               pRipple
               icon="pi pi-arrow-right"
               class="p-button-outlined p-button-text"
+              (click)="verEquipo(equipo)"
             ></button>
           </td>
         </tr>
@@ -77,6 +78,8 @@
           type="text"
           formControlName="code"
           placeholder="Identificador Equipo"
+          #input
+          (input)="input.value = $event.target.value.toUpperCase()"
         />
         <p-message
           severity="error"
@@ -109,8 +112,7 @@
         <p-dropdown
           [options]="section"
           formControlName="section"
-          placeholder="Seleccione una Seccion" 
-          
+          placeholder="Seleccione una Seccion"
         ></p-dropdown>
         <p-message
           severity="error"

@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 // PrimeNG
 import { MessageService, ConfirmationService, SelectItem } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
@@ -30,7 +31,8 @@ export class EquipoComponent implements OnInit {
     private equipoService: EquipoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   obtenerEquipos(): void {
@@ -142,6 +144,10 @@ export class EquipoComponent implements OnInit {
   validarEliminacion(equipo: Equipo) {
     let index = this.equipos.findIndex((e) => e.code === equipo.code);
     this.equipos.splice(index, 1);
+  }
+
+  verEquipo(equipo: Equipo){
+    this.router.navigateByUrl(`resumen/equipo/ver/${equipo.code}`)
   }
 
   ngOnInit(): void {
