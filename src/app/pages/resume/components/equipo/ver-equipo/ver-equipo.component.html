@@ -1,1 +1,108 @@
-<p>ver-equipo works!</p>
+<div class="ui-g p-fluid">
+  <p-panel header="Equipo">
+    <form [formGroup]="equipoForm">
+      <!-- Primera Fila -->
+      <div class="row-1">
+        <div class="column column-1">
+          <span class="p-float-label">
+            <input type="text" formControlName="nombre" pInputText />
+            <label for="inputtext">Maquina/Equipo</label>
+          </span>
+        </div>
+        <div class="column column-2">
+          <span class="p-float-label">
+            <input type="text" formControlName="section" pInputText />
+            <label for="inputtext">Seccion</label>
+          </span>
+        </div>
+        <div class="column column-3">
+          <span class="p-float-label">
+            <input type="text" formControlName="code" pInputText />
+            <label for="inputtext">Codigo</label>
+          </span>
+        </div>
+      </div>
+      <!-- Segunda Columna -->
+      <div class="row-2">
+        <div class="column column-1">
+          <span class="p-float-label">
+            <input type="text" formControlName="marca" pInputText />
+            <label for="inputtext">Marca</label>
+          </span>
+        </div>
+        <div class="column column-2">
+          <span class="p-float-label">
+            <input type="text" formControlName="modelo" pInputText />
+            <label for="inputtext">Modelo</label>
+          </span>
+        </div>
+        <div class="column column-3">
+          <span class="p-float-label">
+            <input type="text" formControlName="tipo" pInputText />
+            <label for="inputtext">Tipo</label>
+          </span>
+        </div>
+        <div class="column column-4">
+          <span class="p-float-label">
+            <input type="text" formControlName="numeroSerie" pInputText />
+            <label for="inputtext">No. Serie</label>
+          </span>
+        </div>
+        <div class="column column-5">
+          <span class="p-float-label">
+            <input type="text" formControlName="dimensiones" pInputText />
+            <label for="inputtext">Dimensiones</label>
+          </span>
+        </div>
+      </div>
+      <!-- Tercera Columna -->
+      <div class="row-3">
+        <div class="column column-6">
+          <span class="p-float-label">
+            <input type="text" formControlName="peso" pInputText />
+            <label for="inputtext">Peso</label>
+          </span>
+        </div>
+        <div class="column column-7">
+          <span class="p-float-label">
+            <input type="text" formControlName="capacidadTrabajo" pInputText />
+            <label for="inputtext">Cap. Trabajo</label>
+          </span>
+        </div>
+        <div class="column column-8">
+          <span class="p-float-label">
+            <input type="text" formControlName="voltaje" pInputText />
+            <label for="inputtext">Volt.(V)</label>
+          </span>
+        </div>
+        <div class="column column-9">
+          <span class="p-float-label">
+            <input type="text" formControlName="amperaje" pInputText />
+            <label for="inputtext">AMP</label>
+          </span>
+        </div>
+        <div class="column column-10">
+          <span class="p-float-label">
+            <input type="text" formControlName="ciclos" pInputText />
+            <label for="inputtext">Ciclos</label>
+          </span>
+        </div>
+        <div class="column column-11">
+          <span class="p-float-label">
+            <input type="text" formControlName="kw" pInputText />
+            <label for="inputtext">KW</label>
+          </span>
+        </div>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+    <p-button
+      label="Guardar"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+  </p-panel>
+  <p-panel [toggleable]="true" [collapsed]="!motor" header="Motor"></p-panel>
+  <p-panel [toggleable]="true" [collapsed]="verReductor" header="Reductor"></p-panel>
+  <p-panel [toggleable]="true" [collapsed]="verlubricante" header="Lubricacion"></p-panel>
+</div>

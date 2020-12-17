@@ -29,6 +29,10 @@ export class VerEquipoComponent implements OnInit {
   motor: Motor;
   reductor: Reductor;
   lubricante: Lubricante;
+  equipoForm: FormGroup;
+  verMotor: boolean = false;
+  verReductor: boolean = false;
+  verlubricante: boolean = false;
 
   constructor(
     private equipoService: EquipoService,
@@ -43,7 +47,10 @@ export class VerEquipoComponent implements OnInit {
   ) {}
 
   obtenerEquipo(code: string) {
-    this.equipoService.getOne(code).subscribe((e) => (this.equipo = e));
+    this.equipoService.getOne(code).subscribe((equipo: Equipo) => {
+      this.equipo = equipo;
+      this.equipoForm.patchValue(equipo);
+    });
   }
 
   obtenerMotor(code: string) {
@@ -73,6 +80,22 @@ export class VerEquipoComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const code: string = params.get('id');
       this.cargarValores(code);
+    });
+    this.equipoForm = this.fb.group({
+      code: new FormControl(null, Validators.required),
+      nombre: new FormControl(null, Validators.required),
+      section: new FormControl(null, Validators.required),
+      marca: new FormControl(),
+      modelo: new FormControl(),
+      tipo: new FormControl(),
+      numeroSerie: new FormControl(),
+      dimensiones: new FormControl(),
+      peso: new FormControl(),
+      capacidadTrabajo: new FormControl(),
+      voltaje: new FormControl(),
+      amperaje: new FormControl(),
+      ciclos: new FormControl(),
+      kw: new FormControl(),
     });
   }
 }
