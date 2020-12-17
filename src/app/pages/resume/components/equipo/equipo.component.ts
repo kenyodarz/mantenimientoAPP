@@ -105,6 +105,45 @@ export class EquipoComponent implements OnInit {
     this.guardarEquipo();
   }
 
+  eliminarEquipo() {
+    if (this.selectedEquipo === null || this.selectedEquipo === null) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: '!!!Advertencia¡¡¡',
+        detail: 'No ha seleccionado ningun Equipo',
+      });
+      return;
+    }
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea eliminar este equipo?',
+      accept: () => {
+        this.equipoService
+          .delete(this.selectedEquipo.code)
+          .subscribe((equipo: Equipo) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Resultado',
+              detail: `Se eliminó el equipo ${equipo.nombre} correctamente`,
+            });
+            this.validarEliminacion(equipo);
+          },
+          (error)=>{
+            console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: `${error.error.error}`,
+              detail: `No se puede eliminar el equipo si tienes registros anidados a el`,
+            });
+          }
+          );
+      },
+    });
+  }
+  validarEliminacion(equipo: Equipo) {
+    let index = this.equipos.findIndex((e) => e.code === equipo.code);
+    this.equipos.splice(index, 1);
+  }
+
   ngOnInit(): void {
     this.obtenerEquipos();
     this.equipoForm = this.fb.group({
@@ -137,7 +176,7 @@ export class EquipoComponent implements OnInit {
       {
         label: 'Eliminar',
         icon: 'pi pi-fw pi-trash',
-        // command: () => this.eliminar(),
+        command: () => this.eliminarEquipo(),
       },
       {
         label: 'Actualizar',
