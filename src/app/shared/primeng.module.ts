@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 const myModule = [
   ToastModule,
@@ -25,6 +26,7 @@ const myModule = [
   DialogModule,
   DropdownModule,
   ConfirmDialogModule,
+  InputTextareaModule,
 ];
 
 @NgModule({

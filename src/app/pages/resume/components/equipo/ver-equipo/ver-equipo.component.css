@@ -12,7 +12,8 @@
 
 .row-1,
 .row-2,
-.row-3 {
+.row-3,
+.row-4 {
   /* border: 2px solid red; */
   display: flex;
   align-items: center;
@@ -24,6 +25,11 @@
   /* border: 2px solid green; */
   width: 100%;
   margin: 10px;
+}
+
+.column textarea {
+  /* border: 2px solid green; */
+  width: 100%;
 }
 
 ::ng-deep .p-panel .p-panel-header {
