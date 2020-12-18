@@ -76,6 +76,19 @@ export class VerEquipoComponent implements OnInit {
     this.obtenerReductor(code);
   }
 
+  onGuardarEquipo() {
+    console.log(this.equipoForm.value);
+    this.equipo = this.equipoForm.value;
+    this.equipoService.save(this.equipo).subscribe((equipo: Equipo) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Guardado',
+        detail: `Se ha actualizado correctatamente el equipo ${equipo.nombre} con el codigo ${equipo.code}`,
+      });
+      this.cargarValores(equipo.code);
+    });
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const code: string = params.get('id');

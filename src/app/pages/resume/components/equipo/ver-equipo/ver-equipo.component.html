@@ -5,19 +5,19 @@
       <div class="row-1">
         <div class="column column-1">
           <span class="p-float-label">
-            <input type="text" formControlName="nombre" pInputText />
+            <input type="text" formControlName="nombre" readonly pInputText />
             <label for="inputtext">Maquina/Equipo</label>
           </span>
         </div>
         <div class="column column-2">
           <span class="p-float-label">
-            <input type="text" formControlName="section" pInputText />
+            <input type="text" formControlName="section" readonly pInputText />
             <label for="inputtext">Seccion</label>
           </span>
         </div>
         <div class="column column-3">
           <span class="p-float-label">
-            <input type="text" formControlName="code" pInputText />
+            <input type="text" formControlName="code" readonly pInputText />
             <label for="inputtext">Codigo</label>
           </span>
         </div>
@@ -98,11 +98,13 @@
     <ng-template pTemplate="footer">
     <p-button
       label="Guardar"
+      [disabled]="equipoForm.invalid"
+      (onClick)="onGuardarEquipo()"
       styleClass="p-button-text"
     ></p-button>
   </ng-template>
   </p-panel>
   <p-panel [toggleable]="true" [collapsed]="!motor" header="Motor"></p-panel>
-  <p-panel [toggleable]="true" [collapsed]="verReductor" header="Reductor"></p-panel>
-  <p-panel [toggleable]="true" [collapsed]="verlubricante" header="Lubricacion"></p-panel>
+  <p-panel [toggleable]="true" [collapsed]="!reductor" header="Reductor"></p-panel>
+  <p-panel [toggleable]="true" [collapsed]="!lubricante" header="Lubricacion"></p-panel>
 </div>
