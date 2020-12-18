@@ -31,6 +31,7 @@ export class VerEquipoComponent implements OnInit {
   lubricante: Lubricante;
   equipoForm: FormGroup;
   motorForm: FormGroup;
+  reductorForm: FormGroup;
   verMotor: boolean = false;
   verReductor: boolean = false;
   verlubricante: boolean = false;
@@ -70,9 +71,12 @@ export class VerEquipoComponent implements OnInit {
   }
 
   obtenerReductor(code: string) {
-    this.reductorService
-      .getByEquipo(code)
-      .subscribe((e) => (this.reductor = e));
+    this.reductorService.getByEquipo(code).subscribe((reductor: Reductor) => {
+      this.reductor = reductor;
+      if (reductor !== null && reductor.idReductor !== null) {
+        this.reductorForm.patchValue(reductor);
+      }
+    });
   }
 
   cargarValores(code: string) {
@@ -100,18 +104,29 @@ export class VerEquipoComponent implements OnInit {
       equipo: this.equipo,
     });
     this.motor = this.motorForm.value;
-    this.motorService.save(this.motor).subscribe((motor: Motor)=>{
+    this.motorService.save(this.motor).subscribe((motor: Motor) => {
       this.messageService.add({
         severity: 'success',
         summary: 'Guardado',
         detail: `Se ha actualizado correctatamente el Motor del equipo ${motor.equipo.nombre} con el codigo ${motor.equipo.code}`,
       });
       this.cargarValores(motor.equipo.code);
-    })
+    });
   }
 
-  onGuardarReductor(){
-    
+  onGuardarReductor() {
+    this.reductorForm.patchValue({
+      equipo: this.equipo
+    })
+    this.reductor = this.reductorForm.value
+    this.reductorService.save(this.reductor).subscribe((reductor: Reductor)=>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Guardado',
+        detail: `Se ha actualizado correctatamente el Reductor del equipo ${reductor.equipo.nombre} con el codigo ${reductor.equipo.code}`,
+      });
+      this.cargarValores(reductor.equipo.code);
+    })
   }
 
   ngOnInit(): void {
@@ -153,6 +168,19 @@ export class VerEquipoComponent implements OnInit {
       frecuencia: new FormControl(null, Validators.required),
       cos: new FormControl(),
       kw: new FormControl(),
+      equipo: new FormControl(),
+    });
+    this.reductorForm = this.fb.group({
+      idReductor: new FormControl(),
+      marca: new FormControl(),
+      modelo: new FormControl(),
+      tipo: new FormControl(null, Validators.required),
+      noSerie: new FormControl(),
+      rpm: new FormControl(),
+      hp: new FormControl(),
+      relation: new FormControl(null, Validators.required),
+      rpmSalida: new FormControl(),
+      otros: new FormControl(),
       equipo: new FormControl(),
     });
   }
