@@ -307,6 +307,16 @@
       dataKey="idLubricante"
       editMode="row"
     >
+    <ng-template pTemplate="caption">
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-plus"
+          class="p-button-rounded p-button-text p-button-success"
+          (click)="displaySaveEditDialog = true; lubricanteForm.reset()"
+        ></button>
+    </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>PARTE</th>
@@ -390,8 +400,16 @@
               type="button"
               pInitEditableRow
               icon="pi pi-pencil"
-              (click)="onRowEditInit(lubricante)"
               class="p-button-rounded p-button-text"
+            ></button>
+            <button
+              *ngIf="!editing"
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-danger"
+              (click)="onRowDelete(lubricante)"
             ></button>
             <button
               *ngIf="editing"
@@ -410,7 +428,6 @@
               type="button"
               pCancelEditableRow
               icon="pi pi-times"
-              (click)="onRowEditCancel(lubricante, ri)"
               class="p-button-rounded p-button-text p-button-danger"
             ></button>
           </td>
@@ -419,3 +436,62 @@
     </p-table>
   </p-panel>
 </div>
+
+<!-- Modal Guardar / Editar -->
+<p-dialog
+  [(visible)]="displaySaveEditDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  header="Lubricación"
+>
+  <form [formGroup]="lubricanteForm" (ngSubmit)="onGuardarLubricante()">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div>
+        <div>Parte</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="parte"
+          placeholder="Parte"
+        />
+        <p-message
+          severity="error"
+          text="Es necesario ingresar la parte"
+          *ngIf="
+            !lubricanteForm.controls['parte'].valid &&
+            lubricanteForm.controls['parte'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Lubricante</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="lubricante"
+          placeholder="Lubricante"
+        />
+        <p-message
+          severity="error"
+          text="Ingrese un lubricante"
+          *ngIf="
+            !lubricanteForm.controls['lubricante'].valid &&
+            lubricanteForm.controls['lubricante'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displaySaveEditDialog = false; onGuardarLubricante()"
+      label="Guardar"
+      [disabled]="lubricanteForm.invalid"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

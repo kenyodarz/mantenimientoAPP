@@ -29,13 +29,15 @@ export class VerEquipoComponent implements OnInit {
   motor: Motor;
   reductor: Reductor;
   lubricante: Lubricante;
-  lubricasteList: Lubricante[]=[];
+  lubricasteList: Lubricante[] = [];
   equipoForm: FormGroup;
   motorForm: FormGroup;
   reductorForm: FormGroup;
+  lubricanteForm: FormGroup;
   verMotor: boolean = false;
   verReductor: boolean = false;
   verlubricante: boolean = false;
+  displaySaveEditDialog: boolean = false;
 
   constructor(
     private equipoService: EquipoService,
@@ -144,17 +146,52 @@ export class VerEquipoComponent implements OnInit {
     });
   }
 
-  onRowEditInit(lubricante: Lubricante) {
-    this.lubricante = lubricante
+  onGuardarLubricante() {
+    this.lubricanteForm.patchValue({
+      equipo: this.equipo,
+    });
+    this.lubricante = this.lubricanteForm.value;
+    this.lubricanteService
+      .save(this.lubricante)
+      .subscribe((lubricante: Lubricante) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Guardado',
+          detail: `Se ha Agregado correctatamente el Lubricante del equipo ${lubricante.equipo.nombre} con el codigo ${lubricante.equipo.code}`,
+        });
+        this.cargarValores(lubricante.equipo.code);
+      });
   }
 
   onRowEditSave(lubricante: Lubricante) {
-    console.log(lubricante);
+    this.lubricanteService
+      .save(lubricante)
+      .subscribe((lubricante: Lubricante) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Guardado',
+          detail: `Se ha Actualizado correctatamente el Lubricante del equipo ${lubricante.equipo.nombre} con el codigo ${lubricante.equipo.code}`,
+        });
+        this.cargarValores(lubricante.equipo.code);
+      });
   }
 
-  onRowEditCancel(lubricante: Lubricante, index: number) {
-    console.log(lubricante);
-    console.log(index);
+  onRowDelete(lubricante: Lubricante) {
+    this.confirmationService.confirm({
+      message: `¿Está seguro que desea eliminar la guia lubricacion de ${lubricante.parte}?`,
+      accept: () => {
+        this.lubricanteService
+          .delete(lubricante.idLubricante)
+          .subscribe((lubricante: Lubricante) => {
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Eliminado',
+              detail: `Se ha Eliminado correctatamente el Lubricante del equipo ${lubricante.equipo.nombre} con el codigo ${lubricante.equipo.code}`,
+            });
+            this.cargarValores(lubricante.equipo.code);
+          });
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -210,6 +247,15 @@ export class VerEquipoComponent implements OnInit {
       relation: new FormControl(null, Validators.required),
       rpmSalida: new FormControl(),
       otros: new FormControl(),
+      equipo: new FormControl(),
+    });
+    this.lubricanteForm = this.fb.group({
+      idLubricante: new FormControl(),
+      parte: new FormControl(null, Validators.required),
+      method: new FormControl(),
+      lubricante: new FormControl(null, Validators.required),
+      frecuencia: new FormControl(),
+      notas: new FormControl(),
       equipo: new FormControl(),
     });
   }
