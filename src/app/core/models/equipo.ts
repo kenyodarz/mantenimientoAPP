@@ -14,6 +14,7 @@ export class Equipo {
     public amperaje: string = null,
     public ciclos: string = null,
     public kw: string = null,
-    public description: string = null
+    public description: string = null,
+    public dadoBaja: boolean = false
   ) {}
 }

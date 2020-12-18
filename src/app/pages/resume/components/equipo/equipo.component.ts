@@ -40,7 +40,9 @@ export class EquipoComponent implements OnInit {
       (array: Equipo[]) => {
         let equipos: Equipo[] = [];
         array.forEach((element) => {
-          equipos.push(element);
+          if (!element.dadoBaja) {
+            equipos.push(element);
+          }
         });
         this.equipos = equipos.sort(function (a, b) {
           if (a.code > b.code) {
@@ -119,9 +121,8 @@ export class EquipoComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Está seguro que desea eliminar este equipo?',
       accept: () => {
-        this.equipoService
-          .delete(this.selectedEquipo.code)
-          .subscribe((equipo: Equipo) => {
+        this.equipoService.delete(this.selectedEquipo.code).subscribe(
+          (equipo: Equipo) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Resultado',
@@ -129,7 +130,7 @@ export class EquipoComponent implements OnInit {
             });
             this.validarEliminacion(equipo);
           },
-          (error)=>{
+          (error) => {
             console.log(error);
             this.messageService.add({
               severity: 'error',
@@ -137,7 +138,7 @@ export class EquipoComponent implements OnInit {
               detail: `No se puede eliminar el equipo si tienes registros anidados a el`,
             });
           }
-          );
+        );
       },
     });
   }
@@ -146,8 +147,44 @@ export class EquipoComponent implements OnInit {
     this.equipos.splice(index, 1);
   }
 
-  verEquipo(equipo: Equipo){
-    this.router.navigateByUrl(`resumen/equipo/ver/${equipo.code}`)
+  verEquipo(equipo: Equipo) {
+    this.router.navigateByUrl(`resumen/equipo/ver/${equipo.code}`);
+  }
+
+  darDeBaja(): void {
+    if (this.selectedEquipo === null || this.selectedEquipo === null) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: '!!!Advertencia¡¡¡',
+        detail: 'No ha seleccionado ningun Equipo',
+      });
+      return;
+    }
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea dar de baja este equipo?',
+      accept: () => {
+        this.selectedEquipo.dadoBaja = true;
+        this.equipoService.save(this.selectedEquipo).subscribe(
+          (equipo: Equipo) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Resultado',
+              detail: `Se dió de baja el equipo ${equipo.nombre} correctamente`,
+            });
+            this.selectedEquipo.dadoBaja = null;
+            this.obtenerEquipos();
+          },
+          (error) => {
+            console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: `${error.error.error}`,
+              detail: `No se puede eliminar el equipo si tienes registros anidados a el`,
+            });
+          }
+        );
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -168,6 +205,7 @@ export class EquipoComponent implements OnInit {
       ciclos: new FormControl(),
       kw: new FormControl(),
       description: new FormControl(),
+      dadoBaja: new FormControl(false),
     });
     this.items = [
       {
@@ -184,6 +222,12 @@ export class EquipoComponent implements OnInit {
         label: 'Eliminar',
         icon: 'pi pi-fw pi-trash',
         command: () => this.eliminarEquipo(),
+      },
+      {
+        label: 'Dar de Baja',
+        icon: 'pi pi-fw pi-ban',
+        command: () => this.darDeBaja(),
+        id: 'darbaja'
       },
       {
         label: 'Actualizar',
