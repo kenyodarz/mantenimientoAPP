@@ -30,6 +30,7 @@ export class VerEquipoComponent implements OnInit {
   reductor: Reductor;
   lubricante: Lubricante;
   equipoForm: FormGroup;
+  motorForm: FormGroup;
   verMotor: boolean = false;
   verReductor: boolean = false;
   verlubricante: boolean = false;
@@ -54,7 +55,12 @@ export class VerEquipoComponent implements OnInit {
   }
 
   obtenerMotor(code: string) {
-    this.motorService.getByEquipo(code).subscribe((e) => (this.motor = e));
+    this.motorService.getByEquipo(code).subscribe((motor: Motor) => {
+      this.motor = motor;
+      if (motor !== null && motor.idMotor !== null) {
+        this.motorForm.patchValue(motor);
+      }
+    });
   }
 
   obtenerLubricante(code: string) {
@@ -89,6 +95,25 @@ export class VerEquipoComponent implements OnInit {
     });
   }
 
+  onGuardarMotor() {
+    this.motorForm.patchValue({
+      equipo: this.equipo,
+    });
+    this.motor = this.motorForm.value;
+    this.motorService.save(this.motor).subscribe((motor: Motor)=>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Guardado',
+        detail: `Se ha actualizado correctatamente el Motor del equipo ${motor.equipo.nombre} con el codigo ${motor.equipo.code}`,
+      });
+      this.cargarValores(motor.equipo.code);
+    })
+  }
+
+  onGuardarReductor(){
+    
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const code: string = params.get('id');
@@ -109,6 +134,26 @@ export class VerEquipoComponent implements OnInit {
       amperaje: new FormControl(),
       ciclos: new FormControl(),
       kw: new FormControl(),
+    });
+    this.motorForm = this.fb.group({
+      idMotor: new FormControl(),
+      marca: new FormControl(null, Validators.required),
+      modelo: new FormControl(null, Validators.required),
+      tipo: new FormControl(),
+      clase: new FormControl(),
+      fase: new FormControl(null, Validators.required),
+      noSerie: new FormControl(),
+      aislamiento: new FormControl(),
+      connection: new FormControl(),
+      fs: new FormControl(),
+      hp: new FormControl(null, Validators.required),
+      rpm: new FormControl(null, Validators.required),
+      voltaje: new FormControl(null, Validators.required),
+      amperaje: new FormControl(null, Validators.required),
+      frecuencia: new FormControl(null, Validators.required),
+      cos: new FormControl(),
+      kw: new FormControl(),
+      equipo: new FormControl(),
     });
   }
 }
