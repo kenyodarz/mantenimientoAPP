@@ -10,10 +10,11 @@ import { HomeComponent } from './components/home/home.component';
 import { ResumenComponent } from './resumen.component';
 import { EquipoComponent } from './components/equipo/equipo.component';
 import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.component';
+import { InstructivoComponent } from './components/instructivo/instructivo.component';
 
 
 @NgModule({
-  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent],
+  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent, InstructivoComponent],
   imports: [
     CommonModule,
     ResumenRoutingModule,
