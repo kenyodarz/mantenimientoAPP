@@ -17,7 +17,7 @@ export class LubricanteService extends CommonService<Lubricante, string> {
   constructor(protected http: HttpClient) {
     super(http);
   }
-  getByEquipo(code: String): Observable<Lubricante> {
-    return this.http.get<Lubricante>(`${API_URL}/lubricantes/equipo/${code}`);
+  getByEquipo(code: String): Observable<Lubricante[]> {
+    return this.http.get<Lubricante[]>(`${API_URL}/lubricantes/equipo/${code}`);
   }
 }

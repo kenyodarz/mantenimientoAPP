@@ -98,9 +98,14 @@
       <div class="row-4">
         <div class="column column-1">
           <span class="p-float-label">
-            <textarea formControlName="description" rows="5" cols="30" pInputTextarea></textarea>
+            <textarea
+              formControlName="description"
+              rows="5"
+              cols="30"
+              pInputTextarea
+            ></textarea>
             <label for="float-input">Descripción</label>
-        </span>
+          </span>
         </div>
       </div>
     </form>
@@ -293,7 +298,124 @@
   </p-panel>
   <p-panel
     [toggleable]="true"
-    [collapsed]="!lubricante"
+    [collapsed]="lubricasteList.length === 0"
     header="Lubricacion"
-  ></p-panel>
+  >
+    <p-table
+      [value]="lubricasteList"
+      [responsive]="true"
+      dataKey="idLubricante"
+      editMode="row"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>PARTE</th>
+          <th>METODO</th>
+          <th>LUBRICANTE</th>
+          <th>FRECUENCIA</th>
+          <th>NOTAS</th>
+          <th>ACC</th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-lubricante
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="lubricante">
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="lubricante.parte" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ lubricante.parte }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="lubricante.method" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ lubricante.method }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="lubricante.lubricante"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ lubricante.lubricante }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="lubricante.frecuencia"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ lubricante.frecuencia }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="lubricante.notas" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ lubricante.notas }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td style="text-align: center">
+            <button
+              *ngIf="!editing"
+              pButton
+              pRipple
+              type="button"
+              pInitEditableRow
+              icon="pi pi-pencil"
+              (click)="onRowEditInit(lubricante)"
+              class="p-button-rounded p-button-text"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pSaveEditableRow
+              icon="pi pi-check"
+              (click)="onRowEditSave(lubricante)"
+              class="p-button-rounded p-button-text p-button-success p-mr-2"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(lubricante, ri)"
+              class="p-button-rounded p-button-text p-button-danger"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
 </div>

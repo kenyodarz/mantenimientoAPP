@@ -29,6 +29,7 @@ export class VerEquipoComponent implements OnInit {
   motor: Motor;
   reductor: Reductor;
   lubricante: Lubricante;
+  lubricasteList: Lubricante[]=[];
   equipoForm: FormGroup;
   motorForm: FormGroup;
   reductorForm: FormGroup;
@@ -67,7 +68,21 @@ export class VerEquipoComponent implements OnInit {
   obtenerLubricante(code: string) {
     this.lubricanteService
       .getByEquipo(code)
-      .subscribe((e) => (this.lubricante = e));
+      .subscribe((lubicantes: Lubricante[]) => {
+        let lubicanteList: Lubricante[] = [];
+        lubicantes.forEach((element) => {
+          lubicanteList.push(element);
+        });
+        this.lubricasteList = lubicanteList.sort(function (a, b) {
+          if (a.parte > b.parte) {
+            return 1;
+          }
+          if (a.parte < b.parte) {
+            return -1;
+          }
+          return 0;
+        });
+      });
   }
 
   obtenerReductor(code: string) {
@@ -116,17 +131,30 @@ export class VerEquipoComponent implements OnInit {
 
   onGuardarReductor() {
     this.reductorForm.patchValue({
-      equipo: this.equipo
-    })
-    this.reductor = this.reductorForm.value
-    this.reductorService.save(this.reductor).subscribe((reductor: Reductor)=>{
+      equipo: this.equipo,
+    });
+    this.reductor = this.reductorForm.value;
+    this.reductorService.save(this.reductor).subscribe((reductor: Reductor) => {
       this.messageService.add({
         severity: 'success',
         summary: 'Guardado',
         detail: `Se ha actualizado correctatamente el Reductor del equipo ${reductor.equipo.nombre} con el codigo ${reductor.equipo.code}`,
       });
       this.cargarValores(reductor.equipo.code);
-    })
+    });
+  }
+
+  onRowEditInit(lubricante: Lubricante) {
+    this.lubricante = lubricante
+  }
+
+  onRowEditSave(lubricante: Lubricante) {
+    console.log(lubricante);
+  }
+
+  onRowEditCancel(lubricante: Lubricante, index: number) {
+    console.log(lubricante);
+    console.log(index);
   }
 
   ngOnInit(): void {
