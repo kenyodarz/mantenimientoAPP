@@ -149,6 +149,7 @@ export class VerEquipoComponent implements OnInit {
       amperaje: new FormControl(),
       ciclos: new FormControl(),
       kw: new FormControl(),
+      description: new FormControl(),
     });
     this.motorForm = this.fb.group({
       idMotor: new FormControl(),

@@ -13,6 +13,7 @@ export class Equipo {
     public voltaje: string = null,
     public amperaje: string = null,
     public ciclos: string = null,
-    public kw: string = null
+    public kw: string = null,
+    public description: string = null
   ) {}
 }

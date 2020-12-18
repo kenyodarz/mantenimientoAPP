@@ -167,6 +167,7 @@ export class EquipoComponent implements OnInit {
       amperaje: new FormControl(),
       ciclos: new FormControl(),
       kw: new FormControl(),
+      description: new FormControl(),
     });
     this.items = [
       {
