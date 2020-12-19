@@ -4,6 +4,7 @@ import { LoginGuard } from 'src/app/guards/login.guard';
 import { EquipoComponent } from './components/equipo/equipo.component';
 import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.component';
 import { HomeComponent } from './components/home/home.component';
+import { InstructivoComponent } from './components/instructivo/instructivo.component';
 import { ResumenComponent } from './resumen.component';
 
 const routes: Routes = [
@@ -30,6 +31,11 @@ const routes: Routes = [
       {
         path: 'equipo/ver/:id',
         component: VerEquipoComponent,
+        canActivate: [LoginGuard],
+      },
+      {
+        path: 'instructivo',
+        component: InstructivoComponent,
         canActivate: [LoginGuard],
       },
     ],
