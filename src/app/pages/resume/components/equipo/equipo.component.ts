@@ -53,7 +53,6 @@ export class EquipoComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.equipos);
       },
       (error) => {
         console.error(error);

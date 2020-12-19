@@ -1,1 +1,284 @@
-<p>instructivo works!</p>
+<div class="container">
+  <p-card header="Seleccione un Equipo" id="card__equipo">
+    <div class="p-field">
+      <label for="fieldId">Equipo: </label>
+      <p-dropdown
+        id="fieldId"
+        [options]="equipos"
+        [(ngModel)]="equipo"
+        placeholder="Seleccione un Equipo"
+        optionLabel="code"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="code"
+        (ngModelChange)="obtenerInstructivo(equipo.code)"
+      ></p-dropdown>
+    </div>
+  </p-card>
+  <p-card *ngIf="instructivo" header="Instructivo" id="card__instructivo">
+    <p-panel>
+      <p-header>
+        <div class="row__1">
+          <div class="column column-1">
+            <span class="p-float-label">
+              <input
+                readonly
+                type="text"
+                pInputText
+                [(ngModel)]="instructivo.equipo.nombre"
+              />
+              <label for="float-input">Equipo</label>
+            </span>
+          </div>
+          <div class="column column-2">
+            <span class="p-float-label">
+              <input
+                readonly
+                type="text"
+                pInputText
+                [(ngModel)]="instructivo.equipo.code"
+              />
+              <label for="float-input">Codigo</label>
+            </span>
+          </div>
+          <div class="column column-3">
+            <span class="p-float-label">
+              <input
+                readonly
+                type="text"
+                pInputText
+                [(ngModel)]="instructivo.equipo.section"
+              />
+              <label for="float-input">Seccion</label>
+            </span>
+          </div>
+        </div>
+      </p-header>
+      <p-table
+        [value]="instructivo.actividades"
+        [responsive]="true"
+        dataKey="idActividad"
+        selectionMode="single"
+        [(selection)]="selectedActividad"
+        editMode="row"
+      >
+        <ng-template pTemplate="caption">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text p-button-success"
+            (click) = "actividadForm.reset(); displaySaveDialog = true"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-text p-button-danger"
+            (click)="eliminarActividad()"
+          ></button>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 15rem">Tipo</th>
+            <th>Actividad</th>
+            <th style="width: 10rem">Frecuencia</th>
+            <th style="width: 8rem">Editar</th>
+          </tr>
+        </ng-template>
+        <ng-template
+          pTemplate="body"
+          let-actividad
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
+          <tr [pEditableRow]="actividad" [pSelectableRow]="actividad">
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    type="text"
+                    style="width: 100%"
+                    readonly
+                    [(ngModel)]="actividad.tipoActividad"
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ actividad.tipoActividad }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td pEditableColumn class="tactividad">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <textarea
+                    style="width: 100%"
+                    rows="5"
+                    cols="30"
+                    pInputTextarea
+                    [(ngModel)]="actividad.descriptionActividad"
+                  ></textarea>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ actividad.descriptionActividad }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    type="text"
+                    style="width: 100%"
+                    [(ngModel)]="actividad.frecuenciaActividad"
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ actividad.frecuenciaActividad }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td style="text-align: center">
+              <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="editarActividad(actividad)"
+                class="p-button-rounded p-button-text p-button-success p-mr-2"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-footer>
+        <div class="row__footer">
+          <span class="p-float-label">
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              [(ngModel)]="instructivo.observaciones"
+            ></textarea>
+            <label for="float-input">Observaciones</label>
+          </span>
+        </div>
+      </p-footer>
+    </p-panel>
+  </p-card>
+  <p-card
+    *ngIf="!instructivo && equipo"
+    header="Sin Instructivo"
+    id="card__agregar"
+  >
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Agregar Instructivo"
+      class="p-button-outlined p-button-success"
+      (click)="crearInstructivo()"
+    ></button>
+  </p-card>
+</div>
+<!-- Modal Guardar / Editar -->
+<p-dialog
+  header="Agregar Nueva Actividad"
+  [(visible)]="displaySaveDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div>
+        <div>Codigo</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="tipoActividad"
+          placeholder="Ingrese el tipo de actividad"
+          #input
+          (input)="input.value = $event.target.value.toUpperCase()"
+        />
+        <p-message
+          severity="error"
+          text="Es necesario un identificador del equipo"
+          *ngIf="
+            !actividadForm.controls['tipoActividad'].valid &&
+            actividadForm.controls['tipoActividad'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Nombre</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="descriptionActividad"
+          placeholder="Actividad a Desarrollar"
+        />
+        <p-message
+          severity="error"
+          text="Ingrese un nombre al equipo"
+          *ngIf="
+            !actividadForm.controls['descriptionActividad'].valid &&
+            actividadForm.controls['descriptionActividad'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Frecuencia</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="frecuenciaActividad"
+          placeholder="Frecuencia de la actividsad"
+        />
+        <p-message
+          severity="error"
+          text="Ingrese una frecuencia para la activdad"
+          *ngIf="
+            !actividadForm.controls['frecuenciaActividad'].valid &&
+            actividadForm.controls['frecuenciaActividad'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displaySaveEditDialog = false; guardarActividad()"
+      label="Guardar"
+      [disabled]="actividadForm.invalid"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

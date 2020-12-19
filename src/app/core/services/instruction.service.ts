@@ -19,8 +19,8 @@ export class InstructionService extends CommonService<Instruction, String> {
     super(http);
   }
 
-  getByEquipo(code: String): Observable<Instruction[]> {
-    return this.http.get<Instruction[]>(
+  getByEquipo(code: String): Observable<Instruction> {
+    return this.http.get<Instruction>(
       `${API_URL}/instrucciones/equipo/${code}`
     );
   }
@@ -32,7 +32,7 @@ export class InstructionService extends CommonService<Instruction, String> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     return this.http.put<Instruction>(
-      `${API_URL}/${instructivo.idInstruction}/asignar-actividades`,
+      `${API_URL}/instrucciones/${instructivo.idInstruction}/asignar-actividades`,
       actividad,
       { headers: headers }
     );
@@ -45,7 +45,7 @@ export class InstructionService extends CommonService<Instruction, String> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     return this.http.put<Instruction>(
-      `${API_URL}/${instructivo.idInstruction}/eliminar-actividades`,
+      `${API_URL}/instrucciones/${instructivo.idInstruction}/eliminar-actividades`,
       actividad,
       { headers: headers }
     );
