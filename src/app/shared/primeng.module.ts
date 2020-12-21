@@ -14,6 +14,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
 
 const myModule = [
   ToastModule,
@@ -29,6 +30,7 @@ const myModule = [
   ConfirmDialogModule,
   InputTextareaModule,
   CardModule,
+  CalendarModule,
 ];
 
 @NgModule({

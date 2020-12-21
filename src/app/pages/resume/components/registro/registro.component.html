@@ -1,1 +1,204 @@
-<p>registro works!</p>
+<div class="container">
+  <p-card id="card_1" header="Seleccione un Equipo">
+    <div class="row__card">
+      <div class="column column__1"><label for="fieldId">Equipo: </label></div>
+      <div class="column column__2">
+        <p-dropdown
+          id="fieldId"
+          [options]="equipos"
+          [(ngModel)]="equipo"
+          placeholder="Seleccione un Equipo"
+          optionLabel="code"
+          [showClear]="true"
+          [filter]="true"
+          filterBy="code"
+          (ngModelChange)="
+            obtenerInstructivo(equipo.code); obtenerRegistros(equipo.code)
+          "
+        ></p-dropdown>
+      </div>
+    </div>
+  </p-card>
+  <p-card id="card_2" header="Equipo Seleccionado" *ngIf="instructivo">
+    <div class="row__card">
+      <div class="column column__1">
+        <span class="p-float-label">
+          <input
+            readonly
+            type="text"
+            pInputText
+            [(ngModel)]="instructivo.equipo.nombre"
+          />
+          <label for="float-input">Equipo</label>
+        </span>
+      </div>
+      <div class="column column__2">
+        <span class="p-float-label">
+          <input
+            readonly
+            type="text"
+            pInputText
+            [(ngModel)]="instructivo.equipo.code"
+          />
+          <label for="float-input">Codigo</label>
+        </span>
+      </div>
+      <div class="column column__3">
+        <span class="p-float-label">
+          <input
+            readonly
+            type="text"
+            pInputText
+            [(ngModel)]="instructivo.equipo.section"
+          />
+          <label for="float-input">Seccion</label>
+        </span>
+      </div>
+    </div>
+  </p-card>
+  <p-card
+    id="card_3"
+    header="Hoja de vida de maquinaria y equipos"
+    *ngIf="instructivo"
+  >
+    <div class="row__card">
+      <p-menubar [model]="items"></p-menubar>
+      <p-table
+        [value]="registros"
+        #dt
+        [responsive]="true"
+        dataKey="idRegistro"
+        selectionMode="single"
+        [(selection)]="selectedRegistro"
+        editMode="row"
+        [globalFilterFields]="['code', 'section', 'nombre']"
+      >
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i class="pi pi-search" style="margin: 4px 4px 0 0"></i>
+            <input
+              type="text"
+              pInputText
+              size="50"
+              placeholder="Buscar"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              style="width: auto"
+            />
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">#</th>
+            <th>Fecha</th>
+            <th>Actividad</th>
+            <th>Descripcion</th>
+            <th>Vo. Bo.</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-registro>
+          <tr [pSelectableRow]="registro">
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ registro.fecha }}</td>
+            <td>{{ registro.actividad.tipoActividad }}</td>
+            <td>{{ registro.description }}</td>
+            <td>{{ registro.vb }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-card>
+</div>
+<!-- Modal Guardar / Editar -->
+<p-dialog
+  header="{{ title }} registro"
+  [(visible)]="displaySaveEditDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="formRegistro" *ngIf="instructivo">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div>
+        <div>Fecha</div>
+        <p-calendar
+          formControlName="fecha"
+          showButtonBar="true"
+          dateFormat="yy-mm-dd"
+        ></p-calendar>
+        <p-message
+          severity="error"
+          text="Ingrese una fecha valida"
+          *ngIf="
+            !formRegistro.controls['fecha'].valid &&
+            formRegistro.controls['fecha'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Actividad</div>
+        <p-dropdown
+          [options]="actividades"
+          formControlName="actividad"
+          optionLabel="tipoActividad"
+          placeholder="Seleccione una actividad"
+          (onChange)="actualizarDescripcion($event)"
+        ></p-dropdown>
+        <p-message
+          severity="error"
+          text="Seleccione una Actividad"
+          *ngIf="
+            !formRegistro.controls['actividad'].valid &&
+            formRegistro.controls['actividad'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Descripción</div>
+        <textarea
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="description"
+          placeholder="Nombre Equipo"
+        ></textarea>
+        <p-message
+          severity="error"
+          text="Ingrese una descripción a la actividad"
+          *ngIf="
+            !formRegistro.controls['description'].valid &&
+            formRegistro.controls['description'].dirty
+          "
+        ></p-message>
+      </div>
+      <div>
+        <div>Vo. Bo.</div>
+        <input
+          pInputText
+          type="text"
+          formControlName="vb"
+          placeholder="Visto Bueno"
+          readonly
+        />
+        <p-message
+          severity="error"
+          text=""
+          *ngIf="
+            !formRegistro.controls['vb'].valid &&
+            formRegistro.controls['vb'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displaySaveEditDialog = false; onGuardar()"
+      label="Guardar"
+      [disabled]="formRegistro.invalid"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
