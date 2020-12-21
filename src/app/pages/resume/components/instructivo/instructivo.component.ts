@@ -68,7 +68,6 @@ export class InstructivoComponent implements OnInit {
   obtenerInstructivo(code: String) {
     this.instructionService.getByEquipo(code).subscribe((i) => {
       this.instructivo = i;
-      console.log(this.instructivo);
     });
   }
 

@@ -48,10 +48,6 @@
   width: 100%;
 }
 
-/* ::ng-deep #card_2 .p-card .p-card-content {
-  border: 2px solid red;
-} */
-
 ::ng-deep #card_2 .p-card .p-card-content .row__card {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -70,4 +66,31 @@
 }
 ::ng-deep #card_2 .p-card .p-card-content .row__card .column.column__3{
   grid-column: 9 / 12;
+}
+
+
+::ng-deep #card_3 .p-card .p-card-content .row__card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+::ng-deep #card_3 .p-card .p-card-content 
+.p-datatable .p-datatable-wrapper th  {
+  /* border: 2PX solid green; */
+  place-items: center;
+  text-align: center;
+}
+
+::ng-deep #card_3 .p-card .p-card-content 
+.p-datatable .p-datatable-wrapper td  {
+  /* border: 2PX solid green; */
+  place-items: center;
+  text-align: center;
+}
+
+::ng-deep #card_3 .p-card .p-card-content 
+.p-datatable .p-datatable-wrapper .p-datatable-tbody .actividad  {
+  /* border: 2PX solid green; */
+  text-align: justify;
 }

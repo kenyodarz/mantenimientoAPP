@@ -89,10 +89,10 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 3rem">#</th>
-            <th>Fecha</th>
-            <th>Actividad</th>
+            <th style="width: 10rem;">Fecha</th>
+            <th style="width: 10rem;">Actividad</th>
             <th>Descripcion</th>
-            <th>Vo. Bo.</th>
+            <th style="width: 15rem;">Vo. Bo.</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowIndex="rowIndex" let-registro>
@@ -100,7 +100,7 @@
             <td>{{ rowIndex + 1 }}</td>
             <td>{{ registro.fecha }}</td>
             <td>{{ registro.actividad.tipoActividad }}</td>
-            <td>{{ registro.description }}</td>
+            <td class="actividad">{{ registro.description }}</td>
             <td>{{ registro.vb }}</td>
           </tr>
         </ng-template>

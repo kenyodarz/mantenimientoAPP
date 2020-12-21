@@ -40,7 +40,7 @@ export class RegistroComponent implements OnInit {
   constructor(
     private instructionService: InstructionService,
     private actividadService: ActividadService,
-    private registrosServices: RegistroService,
+    private registrosService: RegistroService,
     private equipoService: EquipoService,
     private token: TokenStorageService,
     private messageService: MessageService,
@@ -79,12 +79,11 @@ export class RegistroComponent implements OnInit {
     this.instructionService.getByEquipo(code).subscribe((i) => {
       this.instructivo = i;
       this.actividades = i.actividades;
-      console.log(this.instructivo);
     });
   }
 
   obtenerRegistros(code: string) {
-    this.registrosServices
+    this.registrosService
       .getByEquipo(code)
       .subscribe((registros: Registro[]) => {
         let registrosList: Registro[] = [];
@@ -104,7 +103,7 @@ export class RegistroComponent implements OnInit {
   }
 
   guardarRegistro() {
-    this.registrosServices.save(this.registro).subscribe((registro) => {
+    this.registrosService.save(this.registro).subscribe((registro) => {
       this.messageService.add({
         severity: 'success',
         summary: 'Guardado',
@@ -155,19 +154,54 @@ export class RegistroComponent implements OnInit {
   onGuardar() {
     this.formRegistro.patchValue({
       vb: this.currentUser.name,
+      equipo: this.equipo,
     });
     this.registro = this.formRegistro.value;
     this.guardarRegistro();
   }
 
-  actualizarDescripcion(event){
+  actualizarDescripcion(event) {
     this.formRegistro.patchValue({
       description: event.value.descriptionActividad,
     });
   }
 
+  eliminarRegistro() {
+    if (
+      this.selectedRegistro === null ||
+      this.selectedRegistro.idRegistro === null
+    ) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: '¡¡¡Advertencia!!!',
+        detail: 'No ha seleccionado ningun registro',
+      });
+      return;
+    }
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea eliminar este registro?',
+      accept: () => {
+        this.registrosService
+          .delete(this.selectedRegistro.idRegistro)
+          .subscribe((registro: Registro) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Resultado',
+              detail: `Se eliminó el registro correctamente`,
+            });
+            this.validarEliminacion(registro);
+          });
+      },
+    });
+  }
+  validarEliminacion(registro: Registro) {
+    let index = this.registros.findIndex(
+      (e) => e.idRegistro === registro.idRegistro
+    );
+    this.registros.splice(index, 1);
+  }
+
   ngOnInit(): void {
-    console.log(this.token.getUser().name);
     this.currentUser = this.token.getUser();
     this.obtenerEquipos();
     this.formRegistro = this.fb.group({
@@ -192,12 +226,12 @@ export class RegistroComponent implements OnInit {
       {
         label: 'Eliminar',
         icon: 'pi pi-fw pi-trash',
-        // command: () => this.eliminarEquipo(),
+        command: () => this.eliminarRegistro()
       },
       {
         label: 'Actualizar',
         icon: 'pi pi-fw pi-refresh',
-        // command: () => this.obtenerEquipos(),
+        command: () => this.obtenerRegistros(this.equipo.code),
       },
     ];
     this.config.setTranslation({
