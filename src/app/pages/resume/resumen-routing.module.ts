@@ -5,6 +5,7 @@ import { EquipoComponent } from './components/equipo/equipo.component';
 import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.component';
 import { HomeComponent } from './components/home/home.component';
 import { InstructivoComponent } from './components/instructivo/instructivo.component';
+import { RegistroComponent } from './components/registro/registro.component';
 import { ResumenComponent } from './resumen.component';
 
 const routes: Routes = [
@@ -36,6 +37,11 @@ const routes: Routes = [
       {
         path: 'instructivo',
         component: InstructivoComponent,
+        canActivate: [LoginGuard],
+      },
+      {
+        path: 'registros',
+        component: RegistroComponent,
         canActivate: [LoginGuard],
       },
     ],

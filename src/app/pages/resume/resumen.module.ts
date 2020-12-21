@@ -11,10 +11,11 @@ import { ResumenComponent } from './resumen.component';
 import { EquipoComponent } from './components/equipo/equipo.component';
 import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.component';
 import { InstructivoComponent } from './components/instructivo/instructivo.component';
+import { RegistroComponent } from './components/registro/registro.component';
 
 
 @NgModule({
-  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent, InstructivoComponent],
+  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent, InstructivoComponent, RegistroComponent],
   imports: [
     CommonModule,
     ResumenRoutingModule,
