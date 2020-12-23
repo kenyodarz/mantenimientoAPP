@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginGuard } from 'src/app/guards/login.guard';
 import { EquipoComponent } from './components/equipo/equipo.component';
 import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.component';
+import { EventoComponent } from './components/evento/evento.component';
 import { HomeComponent } from './components/home/home.component';
 import { InstructivoComponent } from './components/instructivo/instructivo.component';
 import { RegistroComponent } from './components/registro/registro.component';
@@ -42,6 +43,11 @@ const routes: Routes = [
       {
         path: 'registros',
         component: RegistroComponent,
+        canActivate: [LoginGuard],
+      },
+      {
+        path: 'eventos',
+        component: EventoComponent,
         canActivate: [LoginGuard],
       },
     ],
