@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
       header: {
         left: 'prev,next',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        right: 'listDay,listMonth,listYear',
       },
       editable: true,
       height: 'auto',

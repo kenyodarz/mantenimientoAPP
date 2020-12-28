@@ -132,7 +132,7 @@
                 <ng-template pTemplate="input">
                   <input
                     pInputText
-                    type="text"
+                    type="number"
                     style="width: 100%"
                     [(ngModel)]="actividad.frecuenciaActividad"
                   />
@@ -218,7 +218,7 @@
   <form [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
     <div class="p-fluid forms-grid" style="margin: 1em 0">
       <div>
-        <div>Codigo</div>
+        <div>Tipo Actividad</div>
         <input
           pInputText
           type="text"
@@ -237,7 +237,7 @@
         ></p-message>
       </div>
       <div>
-        <div>Nombre</div>
+        <div>Descripcion</div>
         <input
           pInputText
           type="text"
@@ -257,9 +257,9 @@
         <div>Frecuencia</div>
         <input
           pInputText
-          type="text"
+          type="number"
           formControlName="frecuenciaActividad"
-          placeholder="Frecuencia de la actividsad"
+          placeholder="Frecuencia de la actividad"
         />
         <p-message
           severity="error"

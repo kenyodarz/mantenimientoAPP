@@ -1,0 +1,70 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep .p-card .p-card-title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+::ng-deep #card__equipo .p-card .p-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+::ng-deep #card__equipo .p-card .p-card-content .p__field {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::ng-deep #card__instructivo .p-card .p-panel .p-panel-header {
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 30px 0 20px 0;
+  align-items: center;
+}
+
+::ng-deep #card__instructivo .p-card .p-panel .p-panel-header .row__1 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+::ng-deep #card__instructivo 
+.p-card .p-panel .p-panel-content{
+  padding: 0;
+}
+
+::ng-deep #card__instructivo 
+.p-card .p-panel .p-panel-content .p-datatable .p-datatable-thead th{
+  text-align: center;
+}
+
+::ng-deep #card__instructivo 
+.p-card .p-panel .p-panel-content .p-datatable .p-datatable-tbody td {
+  text-align: center;
+}
+
+::ng-deep #card__instructivo 
+.p-card .p-panel .p-panel-content .p-datatable .p-datatable-tbody #actividad {
+  text-align: justify;
+}
+
+::ng-deep .p-dialog .p-dialog-content{
+  padding: 0;
+  overflow-y: inherit;
+}
+
+::ng-deep .p-dialog .p-dialog-content .content{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

@@ -6,6 +6,7 @@ import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.co
 import { EventoComponent } from './components/evento/evento.component';
 import { HomeComponent } from './components/home/home.component';
 import { InstructivoComponent } from './components/instructivo/instructivo.component';
+import { ProgramacionComponent } from './components/programacion/programacion.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { ResumenComponent } from './resumen.component';
 
@@ -48,6 +49,11 @@ const routes: Routes = [
       {
         path: 'eventos',
         component: EventoComponent,
+        canActivate: [LoginGuard],
+      },
+      {
+        path: 'programacion',
+        component: ProgramacionComponent,
         canActivate: [LoginGuard],
       },
     ],

@@ -13,10 +13,11 @@ import { VerEquipoComponent } from './components/equipo/ver-equipo/ver-equipo.co
 import { InstructivoComponent } from './components/instructivo/instructivo.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { EventoComponent } from './components/evento/evento.component';
+import { ProgramacionComponent } from './components/programacion/programacion.component';
 
 
 @NgModule({
-  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent, InstructivoComponent, RegistroComponent, EventoComponent],
+  declarations: [ResumenComponent, HomeComponent, EquipoComponent, VerEquipoComponent, InstructivoComponent, RegistroComponent, EventoComponent, ProgramacionComponent],
   imports: [
     CommonModule,
     ResumenRoutingModule,
