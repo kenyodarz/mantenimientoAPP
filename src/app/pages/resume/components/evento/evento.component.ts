@@ -67,7 +67,7 @@ export class EventoComponent implements OnInit {
         right: 'dayGridMonth,timeGridWeek,timeGridDay',
       },
       editable: true,
-      height: 650,
+      height: "auto",
     };
   }
 }

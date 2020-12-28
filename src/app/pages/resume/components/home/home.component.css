@@ -1,0 +1,13 @@
+.container {
+  height: 100%;
+}
+
+.title {
+  height: 10%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+}
+
