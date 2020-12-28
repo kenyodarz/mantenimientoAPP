@@ -10,6 +10,12 @@ import { MenuItem } from 'primeng/api';
 import { EventoService } from 'src/app/core/services/evento.service';
 // Modelos
 import { Evento } from 'src/app/core/models/evento';
+// FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import esLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-evento',
@@ -19,6 +25,7 @@ import { Evento } from 'src/app/core/models/evento';
 export class EventoComponent implements OnInit {
   evento: Evento;
   eventos: Evento[];
+  options: any;
 
   constructor(
     private eventoService: EventoService,
@@ -49,5 +56,18 @@ export class EventoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerEventos();
+    this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+      defaultDate: new Date(),
+      locale: esLocale,
+      defaultView: 'listYear',
+      header: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay',
+      },
+      editable: true,
+      height: 650,
+    };
   }
 }
