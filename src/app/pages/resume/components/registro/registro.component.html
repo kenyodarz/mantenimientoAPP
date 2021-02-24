@@ -11,11 +11,18 @@
           optionLabel="code"
           [showClear]="true"
           [filter]="true"
-          filterBy="code"
+          filterBy="nombre"
           (ngModelChange)="
             obtenerInstructivo(equipo.code); obtenerRegistros(equipo.code)
           "
-        ></p-dropdown>
+        >
+          <ng-template let-item pTemplate="item">
+            {{ item.code }} - {{ item.nombre }}
+          </ng-template>
+          <ng-template let-item pTemplate="selectedItem">
+            {{ item.code }} - {{ item.nombre }}
+          </ng-template>
+        </p-dropdown>
       </div>
     </div>
   </p-card>
@@ -89,10 +96,10 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 3rem">#</th>
-            <th style="width: 10rem;">Fecha</th>
-            <th style="width: 10rem;">Actividad</th>
+            <th style="width: 10rem">Fecha</th>
+            <th style="width: 10rem">Actividad</th>
             <th>Descripcion</th>
-            <th style="width: 15rem;">Vo. Bo.</th>
+            <th style="width: 15rem">Vo. Bo.</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowIndex="rowIndex" let-registro>

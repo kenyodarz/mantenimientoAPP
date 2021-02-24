@@ -7,12 +7,18 @@
         [options]="equipos"
         [(ngModel)]="equipo"
         placeholder="Seleccione un Equipo"
-        optionLabel="code"
         [showClear]="true"
         [filter]="true"
-        filterBy="code"
+        filterBy="nombre"
         (ngModelChange)="obtenerInstructivo(equipo.code)"
-      ></p-dropdown>
+      >
+        <ng-template let-item pTemplate="item">
+          {{ item.code }} - {{ item.nombre }}
+        </ng-template>
+        <ng-template let-item pTemplate="selectedItem">
+          {{ item.code }} - {{ item.nombre }}
+        </ng-template>
+      </p-dropdown>
     </div>
   </p-card>
   <p-card *ngIf="instructivo" header="Instructivo" id="card__instructivo">
@@ -69,7 +75,7 @@
             type="button"
             icon="pi pi-plus"
             class="p-button-rounded p-button-text p-button-success"
-            (click) = "actividadForm.reset(); displaySaveDialog = true"
+            (click)="actividadForm.reset(); displaySaveDialog = true"
           ></button>
           <button
             pButton
